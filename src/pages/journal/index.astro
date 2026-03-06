@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('journal')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Journal — Finny Sh</title>
+    <meta name="description" content="Finny's dev log. Notes on building, shipping, and thinking." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      :root {
+        --bg: #0a0a0b;
+        --bg-card: #111113;
+        --border: #1e1e22;
+        --text: #e4e4e7;
+        --text-dim: #71717a;
+        --accent: #22d3ee;
+        --accent-dim: rgba(34, 211, 238, 0.1);
+        --mono: 'JetBrains Mono', monospace;
+        --sans: 'Inter', system-ui, sans-serif;
+      }
+
+      html { background: var(--bg); color: var(--text); font-family: var(--sans); }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4rem 2rem;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 640px;
+        width: 100%;
+      }
+
+      .nav {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        margin-bottom: 3rem;
+      }
+
+      .nav a {
+        color: var(--text-dim);
+        text-decoration: none;
+      }
+
+      .nav a:hover { color: var(--accent); }
+
+      h1 {
+        font-family: var(--mono);
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        color: var(--text-dim);
+        font-size: 0.95rem;
+        margin-bottom: 3rem;
+      }
+
+      .post-list { list-style: none; }
+
+      .post-item {
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem 0;
+      }
+
+      .post-item:first-child { border-top: 1px solid var(--border); }
+
+      .post-date {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        margin-bottom: 0.4rem;
+      }
+
+      .post-title a {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+
+      .post-title a:hover { color: var(--accent); }
+
+      footer {
+        position: relative;
+        z-index: 1;
+        margin-top: 4rem;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        text-align: center;
+      }
+
+      footer a { color: var(--text-dim); text-decoration: none; }
+      footer a:hover { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="nav"><a href="/">← finny.sh</a></nav>
+
+      <h1>journal</h1>
+      <p class="subtitle">Notes on building, shipping, and thinking.</p>
+
+      <ul class="post-list">
+        {posts.map(post => (
+          <li class="post-item">
+            <div class="post-date">{post.data.date.toISOString().slice(0, 10)}</div>
+            <div class="post-title">
+              <a href={`/journal/${post.data.slug}`}>{post.data.title}</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </main>
+
+    <footer>
+      <p>finny.sh · <a href="/">home</a></p>
+    </footer>
+  </body>
+</html>
