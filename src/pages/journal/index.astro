@@ -75,8 +75,10 @@ const posts = (await getCollection('journal')).sort(
         z-index: 1;
         max-width: 640px;
         width: 100%;
-        margin-top: 5rem;
-        padding-top: 2rem;
+      }
+
+      :global(body) {
+        padding-top: 5rem;
       }
 
       .nav {
