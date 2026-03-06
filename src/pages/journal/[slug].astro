@@ -43,7 +43,27 @@ const { Content } = await post.render();
         flex-direction: column;
         align-items: center;
         padding: 4rem 2rem;
+        padding-top: 6rem;
       }
+
+      nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        background: rgba(10, 10, 11, 0.85);
+        backdrop-filter: blur(12px);
+      }
+
+      nav .logo { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; color: var(--text); text-decoration: none; }
+      nav .logo .accent { color: var(--accent); }
+      nav .nav-links { display: flex; gap: 1.5rem; }
+      nav .nav-links a { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); text-decoration: none; }
+      nav .nav-links a:hover { color: var(--accent); }
 
       body::before {
         content: '';
@@ -130,8 +150,11 @@ const { Content } = await post.render();
     </style>
   </head>
   <body>
+    <nav>
+      <a href="/" class="logo">finny<span class="accent">.sh</span></a>
+      <div class="nav-links"><a href="/journal">journal</a></div>
+    </nav>
     <main>
-      <nav class="nav"><a href="/journal">← journal</a></nav>
       <div class="meta">{post.data.date.toISOString().slice(0, 10)}</div>
       <h1>{post.data.title}</h1>
       <div class="prose">
