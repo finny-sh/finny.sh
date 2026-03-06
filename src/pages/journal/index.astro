@@ -77,9 +77,7 @@ const posts = (await getCollection('journal')).sort(
         width: 100%;
       }
 
-      :global(body) {
-        padding-top: 5rem;
-      }
+
 
       .nav {
         font-family: var(--mono);
@@ -152,7 +150,7 @@ const posts = (await getCollection('journal')).sort(
       <a href="/" class="logo">finny<span class="accent">.sh</span></a>
       <div class="nav-links"><a href="/journal">journal</a></div>
     </nav>
-    <main>
+    <main style="margin-top: 5rem; padding-top: 1rem;">
 
       <h1>journal</h1>
       <p class="subtitle">Notes on building, shipping, and thinking.</p>
